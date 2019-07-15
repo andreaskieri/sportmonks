@@ -38,10 +38,10 @@ class SportmonksApi {
             let plist = [];
             let pkeys = Object.keys(params);
             for (let p in pkeys) {
-                if (pkeys[p] != 'page' && pkeys[p] !== 'filter' && params[pkeys[p]])
+                if (pkeys[p] !== 'page' && pkeys[p] !== 'filter' && params[pkeys[p]])
                     plist.push(pkeys[p]);
                 else {
-                    if (pkeys[p] == 'page')
+                    if (pkeys[p] === 'page')
                         page = params[pkeys[p]];
                     if (pkeys[p] === 'filter') 
                         filter = params[pkeys[p]].replace(/'/g, "")
