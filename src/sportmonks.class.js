@@ -22,6 +22,7 @@ class SportmonksApi {
     }
     _composeUrl(endpoint, params) {
         let page;
+        let filter;
         let newEndpoint = this.baseUrl + endpoint;
         let wrapped = endpoint.match(/\{(.*?)\}/g);
         if (wrapped) {
@@ -37,17 +38,21 @@ class SportmonksApi {
             let plist = [];
             let pkeys = Object.keys(params);
             for (let p in pkeys) {
-                if (pkeys[p] != 'page' && params[pkeys[p]])
+                if (pkeys[p] != 'page' && pkeys[p] !== 'filter' && params[pkeys[p]])
                     plist.push(pkeys[p]);
                 else {
                     if (pkeys[p] == 'page')
                         page = params[pkeys[p]];
+                    if (pkeys[p] === 'filter') 
+                        filter = params[pkeys[p]].replace(/'/g, "")
                 }
             }
             if (page)
                 newEndpoint += "&page=" + page;
             if (plist.length > 0)
                 newEndpoint += "&include=" + plist.join(',');
+            if (filter)
+                newEndpoint += "&" + filter
         }
         return newEndpoint;
     }
